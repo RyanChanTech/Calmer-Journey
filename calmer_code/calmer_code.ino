@@ -53,6 +53,7 @@ void loop()                     // run over and over again
  float temperatureF = sensors.getTempFByIndex(0);
  Serial.print(temperatureF); Serial.print(" degrees F ");
 
+ // Turn on or off the heater depending on the temperature
  if((temperatureF < turnOnTemperature) && (temperatureF > 0) && !heaterOn){
   digitalWrite(heaterPin,HIGH);
   digitalWrite(LED_BUILTIN,HIGH);
@@ -67,21 +68,17 @@ void loop()                     // run over and over again
 
  Serial.println();
 
- //Serial.println();
+ // Display the current temperature on the optional 7-Segment TM1637 Display
  displayNumber((int)temperatureF);
 
-  //digitalWrite(LED_BUILTIN,HIGH); 
-  
+ // Play the heart beat sound
  startPlayback(sample, sizeof(sample));
  
- //delay(1500);                                   //waiting a second
- //digitalWrite(LED_BUILTIN,LOW);
- //digitalWrite(2,LOW);
- //sensors.requestTemperatures(); // Send the command to get temperatures
  delay(1000);
  
 }
 
+// Helper function to display a number on the option 7-Segment TM1637 Display
 void displayNumber(int num){   
     tm.display(3, num % 10);   
     tm.display(2, num / 10 % 10);   
